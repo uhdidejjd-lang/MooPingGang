@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>แก๊งหมูปิ้ง</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;700&display=swap">
+<style>
+:root{--ember:#ff7a2e;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box}
+html,body{margin:0;background:#000;color:#fff;font-family:'Prompt',system-ui,sans-serif}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:#000;z-index:10}
+header{padding:12px 16px;font-weight:700;font-size:1.15rem;text-align:center;background:#000}
+header span{color:var(--ember)}
+.hero{position:relative;width:100%;height:min(100vw,80vh,760px);min-height:260px;background:#000;overflow:hidden;user-select:none}
+.slide{position:absolute;inset:0;transition:transform .7s cubic-bezier(.65,0,.35,1);will-change:transform;display:flex;align-items:center;justify-content:center;background:radial-gradient(circle at 30% 30%,#5a2a10,#000 70%)}
+.slide img{max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;display:block}
+.slide.bad img{display:none}
+.cnt{position:absolute;top:10px;right:12px;font-size:.8rem;background:rgba(0,0,0,.55);padding:2px 10px;border-radius:99px}
+.ar{position:absolute;top:50%;transform:translateY(-50%);width:42px;height:42px;border-radius:50%;background:rgba(0,0,0,.5);color:#fff;border:1px solid rgba(255,255,255,.35);font:inherit;font-size:1.6rem;line-height:1;padding:0;cursor:pointer}
+.ar.l{left:10px}.ar.r{right:10px}
+.dots{position:absolute;bottom:12px;left:0;right:0;display:flex;justify-content:center;gap:7px}
+.dots button{width:9px;height:9px;padding:0;border-radius:50%;background:rgba(255,255,255,.45);border:0;cursor:pointer;transition:width .3s}
+.dots button.on{background:var(--ember);width:22px;border-radius:9px}
+.prog{position:absolute;left:0;bottom:0;height:3px;background:var(--ember);width:0}
+
+header{position:relative;display:flex;align-items:center;justify-content:center;min-height:54px}
+header span{color:var(--ember)}
+.theme-btn{position:absolute;right:14px;top:50%;transform:translateY(-50%);border:1px solid #555;background:#181818;color:#fff;border-radius:999px;padding:7px 11px;font:inherit;font-size:.9rem;cursor:pointer}
+body{padding-bottom:0;transition:background .25s,color .25s}
+body.light{background:#f4f4f4;color:#171717}
+body.light header{background:#fff;color:#171717}
+body.light .hero{background:#eee}
+body.light .slide{background:radial-gradient(circle at 30% 30%,#ffe0c8,#f4f4f4 70%)}
+body.light .theme-btn{background:#f2f2f2;color:#222;border-color:#ccc}
+ .bottom-nav{position:relative;z-index:5;width:100%;padding:10px 0;margin:0;background:#101010;border-top:1px solid #333;border-bottom:1px solid #333;overflow-x:auto;overflow-y:hidden;white-space:nowrap;scrollbar-width:thin;overscroll-behavior-x:contain}
+.nav-group{display:flex;flex-flow:row nowrap;align-items:stretch;gap:0;width:max-content;min-width:100%;height:auto}
+.nav-btn{display:inline-flex;flex:0 0 auto;align-items:center;justify-content:center;min-width:112px;min-height:46px;margin:0;border:0;border-right:1px solid #454545;border-radius:0;background:#191919;color:#eee;font:inherit;font-size:.84rem;padding:8px 14px;white-space:nowrap;cursor:pointer}
+.nav-btn:last-child{border-right:0}
+.nav-btn.active{background:var(--ember);color:#17100b;font-weight:700}
+body.light .bottom-nav{background:#fff;border-color:#ddd}
+body.light .nav-btn{background:#f1f1f1;color:#222;border-right-color:#ccc}
+body.light .nav-btn.active{background:var(--ember);color:#17100b}
+@media(min-width:600px){.bottom-nav{max-width:100%;}.nav-group{width:max-content;min-width:100%}}}
+[hidden]{display:none!important}
+.page-section{display:none;min-height:45vh;padding:24px 18px 32px;text-align:center}
+.page-section.active{display:block}
+.page-section h2{margin:4px 0 10px;font-size:1.25rem}
+.page-section p{margin:0 auto;max-width:520px;color:#aaa;font-size:.92rem;line-height:1.7}
+body.light .page-section p{color:#555}
+.page-section .empty{margin:22px auto 0;padding:18px;max-width:520px;border:1px dashed #555;border-radius:14px;color:#aaa;font-size:.9rem}
+body.light .page-section .empty{border-color:#bbb;color:#666}
+.members-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:18px;margin:22px auto 0;max-width:960px;padding:0 4px}
+.member-card{background:#161616;border:1px solid #333;border-radius:16px;overflow:hidden;text-align:center;transition:transform .2s,box-shadow .2s}
+.member-card:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(255,122,46,.15)}
+.member-card img{width:100%;aspect-ratio:1;object-fit:cover;display:block;background:#222}
+.member-card .info{padding:14px 14px 16px}
+.member-card .role{margin:0;font-size:.88rem;line-height:1.55;color:#ccc}
+body.light .member-card{background:#fff;border-color:#ddd}
+body.light .member-card:hover{box-shadow:0 8px 24px rgba(255,122,46,.12)}
+body.light .member-card .role{color:#444}
+.links-list{margin:22px auto 0;max-width:560px;display:flex;flex-direction:column;gap:14px}
+.link-card{background:#161616;border:1px solid #333;border-radius:16px;padding:16px 18px;text-align:left}
+.link-card h3{margin:0 0 6px;font-size:1.05rem;color:#fff}
+.link-card .desc{margin:0 0 12px;font-size:.88rem;color:#aaa;line-height:1.5}
+.link-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.link-url{flex:1;min-width:0;background:#0d0d0d;border:1px solid #333;border-radius:10px;padding:10px 12px;font-size:.82rem;color:#ffb38a;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;user-select:all}
+.copy-btn{flex-shrink:0;border:0;background:var(--ember);color:#17100b;font:inherit;font-weight:700;font-size:.85rem;padding:10px 16px;border-radius:10px;cursor:pointer;transition:opacity .15s}
+.copy-btn:active{opacity:.85}
+.copy-btn.copied{background:#2ecc71;color:#fff}
+body.light .link-card{background:#fff;border-color:#ddd}
+body.light .link-card h3{color:#171717}
+body.light .link-card .desc{color:#555}
+body.light .link-url{background:#f5f5f5;border-color:#ddd;color:#c45a12}
+@media(min-width:700px){.hero{height:min(65vw,620px)}.bottom-nav{max-width:900px;margin:0 auto}}
+</style>
+</head>
+<body>
+<header>🍢 <span>แก๊งหมูปิ้ง</span><button class="theme-btn" id="themeToggle" type="button" aria-label="สลับโหมด">☀️</button></header>
+<div class="hero" id="hero" aria-roledescription="carousel" aria-label="แบนเนอร์">
+  <div id="slides"></div>
+  <span class="cnt" id="hc">1 / 6</span>
+  <button class="ar l" id="hp" aria-label="ก่อนหน้า">‹</button>
+  <button class="ar r" id="hn" aria-label="ถัดไป">›</button>
+  <div class="dots" id="hd"></div>
+  <i class="prog" id="hg"></i>
+</div>
+<nav class="bottom-nav" aria-label="เมนูหลัก">
+  <div class="nav-group">
+    <button class="nav-btn active" type="button" data-page="home">⌂ หน้าหลัก</button>
+    <button class="nav-btn" type="button" data-page="membersPage">👥 สมาชิก</button>
+    <button class="nav-btn" type="button" data-page="websitesPage">🌐 รวมเว็บไซต์</button>
+  </div>
+</nav>
+<section class="page-section" id="membersPage" hidden>
+  <h2>สมาชิก</h2>
+  <p>พื้นที่แสดงรายชื่อสมาชิกแก๊งหมูปิ้ง</p>
+  <div class="members-grid">
+    <div class="member-card">
+      <img src="https://i.postimg.cc/y87Hbz9y/file-000000003264820ea281b6f52c3ce540.png" alt="สมาชิก 1" referrerpolicy="no-referrer" loading="lazy">
+      <div class="info">
+        <p class="role">ชอบตกปลา ช่วยเรื่องไอเดียระบบ</p>
+      </div>
+    </div>
+    <div class="member-card">
+      <img src="https://i.postimg.cc/Wz4Znyn5/file-0000000083608207bda10004cb4e4f83.png" alt="สมาชิก 2" referrerpolicy="no-referrer" loading="lazy">
+      <div class="info">
+        <p class="role">ผู้ออกแบบระบบเพลง ระบบกีต้าร์จำลอง กองจำลอง ผู้เพิ่มระบบ</p>
+      </div>
+    </div>
+    <div class="member-card">
+      <img src="https://i.postimg.cc/h4JTfkXT/file-00000000d15482089c18cb7016f1ad3e.png" alt="สมาชิก 3" referrerpolicy="no-referrer" loading="lazy">
+      <div class="info">
+        <p class="role">ผู้ที่ลงมือเขียนระบบ แก้บัค เพิ่มระบบอำนวยความสะดวก เชื่อมต่อระบบสื่อสาร ระบบเสียง ระบบที่อยู่ในเงื่อนไขของระบบเว็บไซต์ ผู้จัดทำประกอบรูปแก๊งหมูปิ้ง</p>
+      </div>
+    </div>
+    <div class="member-card">
+      <img src="https://i.postimg.cc/13VjBC7p/file-0000000095d482118e9d2d111877f425.png" alt="สมาชิก 4" referrerpolicy="no-referrer" loading="lazy">
+      <div class="info">
+        <p class="role">ยังไม่มีผลงาน</p>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="page-section" id="websitesPage" hidden>
+  <h2>รวมเว็บไซต์เกี่ยวข้องกับแก๊งหมูปิ้ง</h2>
+  <p>รวมลิงก์เว็บไซต์และช่องทางต่าง ๆ ที่เกี่ยวข้องกับแก๊งหมูปิ้ง</p>
+  <div class="links-list">
+    <div class="link-card">
+      <h3>เว็บไซต์หลักแก๊งหมูปิ้ง</h3>
+      <p class="desc">เว็บไซต์ทางการของแก๊งหมูปิ้ง มีหมวดเพลง หมวดตกปลา ห้องพูดคุย และอื่น ๆ</p>
+      <div class="link-row">
+        <div class="link-url">https://objwghd-maker.github.io/Grilled-Pork-Gang/</div>
+        <button class="copy-btn" type="button" data-copy="https://objwghd-maker.github.io/Grilled-Pork-Gang/">คัดลอก</button>
+      </div>
+    </div>
+    <div class="link-card">
+      <h3>วิธีเข้า server ของแก๊งเรา</h3>
+      <p class="desc">คัดลอกลิงก์แล้ววางในเบราว์เซอร์เพื่อเข้าเซิร์ฟเวอร์ Minecraft ของแก๊งหมูปิ้ง</p>
+      <div class="link-row">
+        <div class="link-url">https://objwghd-maker.github.io/Minecraft-MooPingGang/</div>
+        <button class="copy-btn" type="button" data-copy="https://objwghd-maker.github.io/Minecraft-MooPingGang/">คัดลอก</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+const IMGS=['https://i.postimg.cc/Y0Zg09xj/file-000000009acc82078308982e50fe433c.png','https://i.postimg.cc/RZQG0kNg/file-000000009fa08211b7150f91d3a18f19.png','https://i.postimg.cc/kGbvPzrM/file-00000000f814821194a66355da24ad57.png','https://i.postimg.cc/KcMPz6WQ/file-00000000af288211912f959dc6693829.png','https://i.postimg.cc/zfQhD7Fz/file-000000006cb08211bd6d87a37b19a8e0.png','https://i.postimg.cc/jdhJnthV/file-00000000012082119250c58fe2922936.png'];
+const $=s=>document.querySelector(s);
+(()=>{
+  const themeButton=$('#themeToggle');
+  themeButton.addEventListener('click',()=>{
+    const light=document.body.classList.toggle('light');
+    themeButton.textContent=light?'🌙':'☀️';
+    themeButton.setAttribute('aria-label',light?'เปลี่ยนเป็นโหมดกลางคืน':'เปลี่ยนเป็นโหมดเช้า');
+  });
+  document.querySelectorAll('.nav-btn').forEach(button=>{
+    button.addEventListener('click',()=>{
+      document.querySelectorAll('.nav-btn').forEach(item=>item.classList.toggle('active',item===button));
+      const home=button.dataset.page==='home';
+      document.querySelectorAll('.page-section').forEach(section=>{
+        const selected=!home&&section.id===button.dataset.page;
+        section.hidden=!selected;
+        section.classList.toggle('active',selected);
+      });
+      if(home)window.scrollTo({top:0,behavior:'smooth'});
+      else document.querySelector('.bottom-nav').scrollIntoView({block:'start',behavior:'smooth'});
+    });
+  });
+  document.querySelectorAll('.copy-btn').forEach(btn=>{
+    btn.addEventListener('click',async()=>{
+      const text=btn.dataset.copy||btn.previousElementSibling?.textContent||'';
+      try{
+        await navigator.clipboard.writeText(text);
+        const old=btn.textContent;
+        btn.textContent='คัดลอกแล้ว!';
+        btn.classList.add('copied');
+        setTimeout(()=>{
+          btn.textContent=old;
+          btn.classList.remove('copied');
+        },1800);
+      }catch(e){
+        const range=document.createRange();
+        const el=btn.previousElementSibling;
+        if(el){
+          range.selectNodeContents(el);
+          const sel=window.getSelection();
+          sel.removeAllRanges();
+          sel.addRange(range);
+          document.execCommand('copy');
+          sel.removeAllRanges();
+          const old=btn.textContent;
+          btn.textContent='คัดลอกแล้ว!';
+          btn.classList.add('copied');
+          setTimeout(()=>{
+            btn.textContent=old;
+            btn.classList.remove('copied');
+          },1800);
+        }
+      }
+    });
+  });
+})();
+(()=>{
+  const D=3500;
+  let i=0,timer=null,x0=0;
+  const sl=$('#slides'),dt=$('#hd'),bar=$('#hg'),hero=$('#hero');
+  sl.innerHTML=IMGS.map((u,k)=>`<div class="slide" style="transform:translateX(${k?100:0}%)"><img src="${u}" alt="ภาพที่ ${k+1}" referrerpolicy="no-referrer"></div>`).join('');
+  sl.querySelectorAll('img').forEach(im=>im.addEventListener('error',()=>im.parentNode.classList.add('bad')));
+  dt.innerHTML=IMGS.map((_,k)=>`<button type="button" data-i="${k}" aria-label="ภาพที่ ${k+1}"></button>`).join('');
+  function show(n,dir=1){
+    const old=i;
+    i=(n+IMGS.length)%IMGS.length;
+    if(old!==i){
+      const a=sl.children[old],b=sl.children[i];
+      b.style.transition='none';
+      b.style.transform=`translateX(${dir*100}%)`;
+      void b.offsetWidth;
+      b.style.transition='';
+      a.style.transform=`translateX(${-dir*100}%)`;
+      b.style.transform='translateX(0)';
+    }
+    [...dt.children].forEach((d,k)=>d.classList.toggle('on',k===i));
+    $('#hc').textContent=(i+1)+' / '+IMGS.length;
+  }
+  function startAuto(){
+    clearInterval(timer);
+    bar.style.transition='none';
+    bar.style.width='0';
+    void bar.offsetWidth;
+    bar.style.transition='width '+D+'ms linear';
+    bar.style.width='100%';
+    timer=setInterval(()=>{
+      show(i+1,1);
+      bar.style.transition='none';
+      bar.style.width='0';
+      void bar.offsetWidth;
+      bar.style.transition='width '+D+'ms linear';
+      bar.style.width='100%';
+    },D);
+  }
+  function go(n,dir=1){
+    show(n,dir);
+    startAuto();
+  }
+  $('#hp').addEventListener('click',e=>{e.stopPropagation();go(i-1,-1)});
+  $('#hn').addEventListener('click',e=>{e.stopPropagation();go(i+1,1)});
+  dt.addEventListener('click',e=>{
+    const b=e.target.closest('button');
+    if(b){
+      const k=Number(b.dataset.i);
+      go(k,k<i?-1:1);
+    }
+  });
+  hero.addEventListener('touchstart',e=>{x0=e.touches[0].clientX},{passive:true});
+  hero.addEventListener('touchend',e=>{
+    const dx=e.changedTouches[0].clientX-x0;
+    if(Math.abs(dx)>40)go(i+(dx<0?1:-1),dx<0?1:-1);
+  },{passive:true});
+  addEventListener('keydown',e=>{
+    if(e.key==='ArrowLeft')go(i-1,-1);
+    if(e.key==='ArrowRight')go(i+1,1);
+  });
+  document.addEventListener('visibilitychange',()=>{
+    if(!document.hidden)startAuto();
+  });
+  show(0);
+  startAuto();
+})();
+</script>
+</body>
+</html>
